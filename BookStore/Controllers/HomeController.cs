@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BookStore.Models;
+using BookStore.Util;
 
 namespace BookStore.Controllers
 {
@@ -37,6 +38,25 @@ namespace BookStore.Controllers
             // Сохраняем в бд все изменения
             db.SaveChanges();
             return "Спасибо, " + purchase.Person + ", за покупку!";
+        }
+
+        public string Square(int a = 10, int h = 5)
+        {
+            //int a = Int32.Parse(Request.Params["a"]);
+            //int h = Int32.Parse(Request.Params["h"]);
+            double s = a * h / 2;
+            return "<h2>Площадь теугольника с основанием " + a + " и высотой " + h + " равна " + s + "</h2>";
+        }
+
+        public ActionResult GetHtml()
+        {
+            return new HtmlResult("<h2>Привет мир!</h2>");
+        }
+
+        public ActionResult GetImage()
+        {
+            string path = "../Images/tux.png";
+            return new ImageResult(path);
         }
     }
 }
