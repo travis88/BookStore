@@ -17,5 +17,7 @@ namespace BookStore.Models
         public int BookId { get; set; }
         // Дата покупки
         public DateTime Date { get; set; }
+        // Пароль пользователя
+        public string Password { get; set; }
     }
 }

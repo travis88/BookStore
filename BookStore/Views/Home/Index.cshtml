@@ -16,9 +16,10 @@
                     <td><p>@b.Name</p></td>
                     <td><p>@b.Author</p></td>
                     <td><p>@b.Price</p></td>
-                    <td><p><a href="/Home/Buy">Купить</a></p></td>
+                    @*<td><p><a href="/Home/Buy">Купить</a></p></td>*@
+                    <td>@Html.ActionLink("Приобрести", "Buy", "Home")</td>
                 </tr>
-            }
+                }
         </table>
     </div>
 @Html.Partial("Partial", new string[] { "Russia", "USA", "Canada", "France", "Germany", "USSR", "China" })
@@ -38,23 +39,15 @@
         </ul>
     }
 
-@helper CreateList(string[] list)
-{
-    <ul>
-        @foreach (string s in list)
-        {
-            <li>@s</li>
-        }
-    </ul>
-}
-
 @{
     string[] cities = new string[] { "London", "Paris", "New York", "Moscow" };
     string[] countries = new string[] { "Russia", "China", "Belarus", "Serbia" };
 }
 
+@using BookStore.Helpers
+
 <h3>Cities</h3>
-@CreateList(cities)
+@Html.CreateList(cities, new { @class = "btn", @id = "citiesList"})
 <br />
 <h3>Countries</h3>
-@CreateList(countries)
+@ListHelper.CreateList(Html, countries, new { @class = "btn btn-primary", @id = "countryList"})

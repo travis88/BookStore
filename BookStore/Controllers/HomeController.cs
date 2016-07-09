@@ -24,21 +24,37 @@ namespace BookStore.Controllers
         }
 
         [HttpGet]
-        public ActionResult Buy(int? id)
+        public ActionResult Buy()
         {
-            ViewBag.BookId = id;
+            SelectList books = new SelectList(db.Books, "Author", "Name");
+            ViewBag.Books = books;
             return View();
         }
 
+        //[HttpPost]
+        //public string Buy(Purchase purchase)
+        //{
+        //    purchase.Date = DateTime.Now;
+        //    //// Добавляем информацию о покупке в базу данных
+        //    //db.Purchases.Add(purchase);
+        //    //// Сохраняем в бд все изменения
+        //    //db.SaveChanges();
+        //    string userName = purchase.Person;
+        //    string pwd = purchase.Password;
+
+        //    return "Спасибо за покупку! " + userName + " " + pwd + " " + purchase.Date;
+        //}
+
         [HttpPost]
-        public string Buy(Purchase purchase)
+        public string Buy(string[] countries)
         {
-            purchase.Date = DateTime.Now;
-            // Добавляем информацию о покупке в базу данных
-            db.Purchases.Add(purchase);
-            // Сохраняем в бд все изменения
-            db.SaveChanges();
-            return "Спасибо, " + purchase.Person + ", за покупку!";
+            string result = "";
+            foreach (string s in countries)
+            {
+                result += s;
+                result += "; ";
+            }
+            return "Вы выбрали: " + result;
         }
 
         public string Square(int a = 10, int h = 5)
@@ -75,15 +91,16 @@ namespace BookStore.Controllers
             return File(file_path, file_type, file_name);
         }
 
-        public string Info()
+        public ActionResult Info()
         {
             string browser = HttpContext.Request.Browser.Browser;
             string user_agent = HttpContext.Request.UserAgent;
             string url = HttpContext.Request.RawUrl;
             string ip = HttpContext.Request.UserHostAddress;
             string referer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.AbsoluteUri;
-            return "<p>Browser: " + browser + "</p><p>User-Agent: " + user_agent + "</p><p>Url: " + 
+            string res = "<p>Browser: " + browser + "</p><p>User-Agent: " + user_agent + "</p><p>Url: " +
                 url + "</p><p>Referer: " + referer + "</p><p>IP-address: " + ip + "</p>";
+            return View(res);
         }
 
         public string ContextData()
@@ -102,5 +119,21 @@ namespace BookStore.Controllers
         //    ViewBag.Message = "Этот частичное представление";
         //    return PartialView();
         //}
+
+        [HttpPost]
+        public ActionResult MyAction(string product, string action)
+        {
+            string answer = "";
+            if (action == "add")
+            {
+                answer = product;
+            }
+            else if (action == "delete")
+            {
+                answer = "";
+            }
+            ViewBag.Answer = answer;
+            return View("Buy");
+        }
     }
 }
