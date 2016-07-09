@@ -21,3 +21,40 @@
             }
         </table>
     </div>
+@Html.Partial("Partial", new string[] { "Russia", "USA", "Canada", "France", "Germany", "USSR", "China" })
+
+<div>
+    <h3>Список книг</h3>
+    @Booklist(ViewBag.Books)
+</div>
+
+@helper Booklist(IEnumerable<BookStore.Models.Book> books)
+    {
+        <ul>
+            @foreach (BookStore.Models.Book b in books)
+            {
+                <li>@b.Name</li>
+            }
+        </ul>
+    }
+
+@helper CreateList(string[] list)
+{
+    <ul>
+        @foreach (string s in list)
+        {
+            <li>@s</li>
+        }
+    </ul>
+}
+
+@{
+    string[] cities = new string[] { "London", "Paris", "New York", "Moscow" };
+    string[] countries = new string[] { "Russia", "China", "Belarus", "Serbia" };
+}
+
+<h3>Cities</h3>
+@CreateList(cities)
+<br />
+<h3>Countries</h3>
+@CreateList(countries)

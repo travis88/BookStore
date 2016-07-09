@@ -18,6 +18,7 @@ namespace BookStore.Controllers
             IEnumerable<Book> books = db.Books;
             // Передаём все объекты в динамическое свойство Books в ViewBag
             ViewBag.Books = books;
+            ViewBag.Message = "Этот частичное представление";
             // Возвращаем представление
             return View();
         }
@@ -58,5 +59,48 @@ namespace BookStore.Controllers
             string path = "../Images/tux.png";
             return new ImageResult(path);
         }
+
+        public ActionResult SomeShiiit()
+        {
+            ViewBag.Job = "Hello Job";
+            ViewBag.Head = "Hello Head";
+            return View("SomeView");
+        }
+
+        public FileResult GetFile()
+        {
+            string file_path = Server.MapPath("~/Files/Python.pdf");
+            string file_type = "application/pdf";
+            string file_name = "Python.pdf";
+            return File(file_path, file_type, file_name);
+        }
+
+        public string Info()
+        {
+            string browser = HttpContext.Request.Browser.Browser;
+            string user_agent = HttpContext.Request.UserAgent;
+            string url = HttpContext.Request.RawUrl;
+            string ip = HttpContext.Request.UserHostAddress;
+            string referer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.AbsoluteUri;
+            return "<p>Browser: " + browser + "</p><p>User-Agent: " + user_agent + "</p><p>Url: " + 
+                url + "</p><p>Referer: " + referer + "</p><p>IP-address: " + ip + "</p>";
+        }
+
+        public string ContextData()
+        {
+            HttpContext.Response.Write("<h1>Hello World</h1>");
+
+            string user_agent = HttpContext.Request.UserAgent;
+            string url = HttpContext.Request.RawUrl;
+            string ip = HttpContext.Request.UserHostAddress;
+            string refferer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.AbsoluteUri;
+            return "<p>User-Agent: " + user_agent + "</p><p>Url request: " + url + "</p><p>Refferer: " + refferer + "</p><p>IP-address" + ip + "</p>";
+        }
+
+        //public ActionResult Partial()
+        //{
+        //    ViewBag.Message = "Этот частичное представление";
+        //    return PartialView();
+        //}
     }
 }

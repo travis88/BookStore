@@ -14,5 +14,13 @@
         </ul>
     </nav>
     @RenderBody()
+    <footer>@if (IsSectionDefined("Footer"))
+    {
+                @RenderSection("Footer")
+    }
+    else {
+        <span>&copy; Все права защищены. PencilTrickCorp. 2016.</span>
+    }
+    </footer>
 </body>
 </html>
